@@ -5,20 +5,23 @@ from scipy.optimize import fsolve
 # Given points
 P0 = np.array([0, 0, 0])
 P1 = np.array([105, 0, 0])
+n  = 'P4'
 
 # Given distances
-D04 = 33
-D14 = 76
-D24 = 269
-
+D = {
+  'P2': [259, 255, 269], # D02,D12,D24
+  'P3': [360, 373, 370], # D03,D13,D34
+  'P4': [ 33,  76],      # D04,D14
+  'P5': [235, 187, 225]  # D05,D15,D45
+}
 # Fixed z4 value (e.g., -5)
 z4_fixed = -4 # -1 makes p2z better but labels p0 and p4 cover each other
 
 # Function to determine P4 (x4 and y4) with fixed z4
 def equations_P4_xy(p):
     x4, y4 = p
-    eq1 = x4**2 + y4**2 + z4_fixed**2 - D04**2  # Sphere centered at P0
-    eq2 = (x4 - P1[0])**2 + y4**2 + z4_fixed**2 - D14**2  # Sphere centered at P1
+    eq1 = x4**2 + y4**2 + z4_fixed**2 - D[n][0]**2  # Sphere centered at P0
+    eq2 = (x4 - P1[0])**2 + y4**2 + z4_fixed**2 - D[n][1]**2  # Sphere centered at P1
     return (eq1, eq2)
 
 # Initial guess for P4 (x4, y4)
@@ -32,12 +35,6 @@ P4 = np.array([P4_xy_solution[0], P4_xy_solution[1], z4_fixed])
 P4 = np.round(P4, 2)
 print(f"Calculated coordinates for P4 with z4 fixed at {z4_fixed}: [{', '.join(f'{i:.2f}' for i in P4)}]")
 
-# Given distances p0, p1, p4 to p2,3,5
-D = {
-  'P2': [259, 255, 269], # D02,D12,D24
-  'P3': [360, 373, 370], # D03,D13,D34
-  'P5': [235, 187, 225]  # D05,D15,D45
-}
 
 # Function to minimize: squared difference from the given distances
 def objective(P):
@@ -47,8 +44,7 @@ def objective(P):
     dist_4_P = np.linalg.norm(np.array([x, y, z]) - P4) - D[n][2]
     return dist_0_P**2 + dist_1_P**2 + dist_4_P**2
 
-for i in range(3):
-  n = ['P2','P3','P5'][i]
+for n in ['P2','P3','P5']:
 
   # Initial guess for P5
   initial_guess = np.array([50, 100, -150])
