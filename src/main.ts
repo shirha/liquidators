@@ -5,13 +5,13 @@ import Stats from 'three/addons/libs/stats.module.js'
 import { GUI } from 'dat.gui'
 
 // Define the points with labels and coordinates
-const pts = [
+const pts = [ // swapped z with y
   { label: "Angyuan-Raha XIX", coordinates: [0, 0, 0] },
   { label: "Iawshea-Yook", coordinates: [105, 0, 0] },
-  { label: "Nuuraya", coordinates: [62, -298, 10] },
-  { label: "Rudoin-Blosa", coordinates: [7, -249, -260] },
-  { label: "Uooyiiji", coordinates: [30, 13, -5] },
-  { label: "Taotie", coordinates: [149, -124, -133] }
+  { label: "Nuuraya", coordinates: [63.17, 88.21, -235.86] },
+  { label: "Rudoin-Blosa", coordinates: [7.12, -176.80, -313.51] },
+  { label: "Uooyiiji", coordinates: [30.18, -5, 13.37] },
+  { label: "Taotie", coordinates: [148.96, -91.81, -156.87] }
 ];
 console.log(pts);
 
